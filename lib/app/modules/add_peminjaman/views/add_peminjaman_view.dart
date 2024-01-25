@@ -10,14 +10,40 @@ class AddPeminjamanView extends GetView<AddPeminjamanController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AddPeminjamanView'),
+        title: Text('Pinjam buku ${Get.parameters['judul'].toString()}'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'AddPeminjamanView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Center(
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: controller.tanggalPinjamController,
+                  decoration: const InputDecoration(hintText: "Masukan Tanggal Pinjam"),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Tanggal Pinjam tidak boleh kosong";
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: controller.tanggalKembaliController,
+                  decoration: const InputDecoration(hintText: "Masukan Tanggal Kembali"),
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Tanggal Kembali tidak boleh kosong";
+                    }
+                    return null;
+                  },
+                ),
+                ElevatedButton(onPressed: () {
+                  controller.post();
+                }, child: Text("Pinjam Buku")),
+              ],
+            ),
+          )
       ),
     );
   }
